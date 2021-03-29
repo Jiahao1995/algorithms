@@ -8,7 +8,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class Solver {
 
-    private final static boolean IS_HAMMING = true;
+    private final static boolean IS_HAMMING = false;
     private boolean solvable;
     private final Stack<Board> solution;
     private int minMoves;
@@ -44,6 +44,9 @@ public class Solver {
 
         @Override
         public int compareTo(Node that) {
+            if (this.priority() == that.priority()) {
+                return Integer.compare(this.board.manhattan(), that.board.manhattan());
+            }
             return Integer.compare(this.priority(), that.priority());
         }
     }
@@ -99,12 +102,19 @@ public class Solver {
             }
             Iterable<Board> rawNeighbors = rawNode.board.neighbors();
             for (Board neighbor : rawNeighbors) {
+                if (rawNode.prev != null && neighbor.equals(rawNode.prev.board)) {
+                    continue;
+                }
                 rawPQ.insert(new Node(neighbor, false, rawNode, rawNode.moves + 1));
             }
             Iterable<Board> twinNeighbors = twinNode.board.neighbors();
             for (Board neighbor : twinNeighbors) {
+                if (twinNode.prev != null && neighbor.equals(twinNode.prev.board)) {
+                    continue;
+                }
                 twinPQ.insert(new Node(neighbor, true, twinNode, twinNode.moves + 1));
             }
+            StdOut.print(rawPQ.size());
         }
     }
 
