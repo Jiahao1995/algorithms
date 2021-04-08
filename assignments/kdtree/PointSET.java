@@ -3,9 +3,12 @@ package kdtree;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.SET;
+import edu.princeton.cs.algs4.StdDraw;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static edu.princeton.cs.algs4.StdDraw.BLACK;
 
 public class PointSET {
 
@@ -38,6 +41,11 @@ public class PointSET {
     }
 
     public void draw() {
+        StdDraw.setPenRadius(0.01);
+        StdDraw.setPenColor(BLACK);
+        for (Point2D p : set) {
+            StdDraw.point(p.x(), p.y());
+        }
     }
 
     public Iterable<Point2D> range(RectHV rect) {
